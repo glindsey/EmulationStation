@@ -34,3 +34,8 @@ Makefile
 nbproject
 *.orig
 nbproject/private/private.xml
+
+# Eclipse
+.cproject
+.project
+.settings/

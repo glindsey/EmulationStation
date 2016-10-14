@@ -28,10 +28,10 @@ static const char* inputName[inputCount] =
 	"B",
 	"X",
 	"Y",
-	"LeftBottom",
-	"RightBottom",
-	"LeftTop",
-	"RightTop",
+	"LeftShoulder",
+	"RightShoulder",
+	"LeftTrigger",
+	"RightTrigger",
 	"LeftThumb",
 	"RightThumb",
 	"LeftAnalogUp",
@@ -82,10 +82,10 @@ static const char* inputDispName[inputCount] =
 	"B",
 	"X",
 	"Y",
-	"LEFT BOTTOM",
-	"RIGHT BOTTOM",
-	"LEFT TOP",
-	"RIGHT TOP",
+	"LEFT SHOULDER",
+	"RIGHT SHOULDER",
+	"LEFT TRIGGER",
+	"RIGHT TRIGGER",
 	"LEFT THUMB",
 	"RIGHT THUMB",
 	"LEFT ANALOG UP",
@@ -259,7 +259,6 @@ GuiInputConfig::GuiInputConfig(Window* window, InputConfig* target, bool reconfi
 	std::vector< std::shared_ptr<ButtonComponent> > buttons;
 	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "OK", "ok", [this, okCallback] { 
 		InputManager::getInstance()->writeDeviceConfig(mTargetConfig); // save
-		InputManager::getInstance()->doOnFinish();  // execute possible onFinish commands
 		if(okCallback)
 			okCallback();
 		delete this; 
@@ -286,7 +285,7 @@ void GuiInputConfig::onSizeChanged()
 	mGrid.setRowHeightPerc(5, (mList->getRowHeight(0) * 5 + 2) / mSize.y());
 	mGrid.setRowHeightPerc(6, mButtonGrid->getSize().y() / mSize.y());
 
-    mBusyAnim.setSize(mSize);
+	mBusyAnim.setSize(mSize);
 }
 
 void GuiInputConfig::update(int deltaTime)
