@@ -212,7 +212,8 @@ void updateGamelist(SystemData* system)
 		//get only files, no folders
 		std::vector<FileData*> files = rootFolder->getFilesRecursive(GAME | FOLDER, false, false, false);
 		//iterate through all files, checking if they're already in the XML
-		if(files.size() > 0)
+		std::vector<FileData*>::const_iterator fit = files.cbegin();
+		while(fit != files.cend())
 		{
 			const char* tag = ((*fit)->getType() == GAME) ? "game" : "folder";
 
@@ -226,12 +227,7 @@ void updateGamelist(SystemData* system)
 			// if it does, remove it before adding
 			for(pugi::xml_node fileNode = root.child(tag); fileNode; fileNode = fileNode.next_sibling(tag))
 			{
-				const char* tag = ((*fit)->getType() == GAME) ? "game" : "folder";
 
-				// check if the file already exists in the XML
-				// if it does, remove it before adding
-				for(pugi::xml_node fileNode = root.child(tag); fileNode; fileNode = fileNode.next_sibling(tag))
-				{
 					pugi::xml_node pathNode = fileNode.child("path");
 					if(!pathNode)
 					{
@@ -254,7 +250,7 @@ void updateGamelist(SystemData* system)
 
 				++fit;
 			}
-		}
+
 		//now write the file
 
 		//make sure the folders leading up to this path exist (or the write will fail)
