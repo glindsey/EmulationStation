@@ -176,6 +176,11 @@ void SystemData::populateFolder(FileData* folder)
 		if(filePath.stem().empty())
 			continue;
 
+		// skip filenames starting with a . (hidden files on *NIX systems)
+		std::string fn = filePath.filename().string();
+		if (fn[0] == '.')
+			continue;
+
 		//this is a little complicated because we allow a list of extensions to be defined (delimited with a space)
 		//we first get the extension of the file itself:
 		extension = filePath.extension().string();
